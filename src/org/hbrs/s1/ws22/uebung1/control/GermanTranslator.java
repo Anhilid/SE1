@@ -9,8 +9,11 @@ public class GermanTranslator implements Translator {
 	 */
 	public String translateNumber( int number ) {
 		// [ihr Source Code aus Übung 1-2]
-
-		return null;
+		try {
+			return translate(number);
+		} catch (Exception e){
+			throw new IllegalArgumentException();
+		}
 	}
 
 	/**
@@ -28,4 +31,8 @@ public class GermanTranslator implements Translator {
 		this.date = date;
 	}
 
+	public String translate(int number){
+		String [] t = {"eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn"};
+		return t[number-1];
+	}
 }
