@@ -11,8 +11,8 @@ public class GermanTranslator implements Translator {
 		// [ihr Source Code aus Übung 1-2]
 		try {
 			return translate(number);
-		} catch (Exception e){
-			throw new IllegalArgumentException();
+		} catch (IndexOutOfBoundsException e){
+			throw new IllegalArgumentException("Übersetzung der Zahl" + number + " nicht möglich " + Translator.version);
 		}
 	}
 

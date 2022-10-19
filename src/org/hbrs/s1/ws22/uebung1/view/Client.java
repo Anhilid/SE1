@@ -32,14 +32,10 @@ public class Client {
 			 */
 
 			//Das hier in der Factory Methode
-//return "Übersetzung der Zahl " + number + " nicht möglich " + version
-		try{
+			//return "Übersetzung der Zahl " + number + " nicht möglich " + version
 			translator = Factory.generateTranslator();
 			String result = translator.translateNumber(aNumber);
 			System.out.print("Das Ergebnis der Berechnung: " + result  );
-		} catch (Exception e){
-			System.out.print("Übersetzung der Zahl " + aNumber + " nicht möglich " + Translator.version);
-		}
 
 	}
 
