@@ -1,5 +1,3 @@
-package org.hbrs.s1.ws22.uebung1.view;
-
 import control.GermanTranslator;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
