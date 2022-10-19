@@ -1,11 +1,10 @@
 package org.hbrs.s1.ws22.uebung1.view;
 
-import org.hbrs.s1.ws22.uebung1.control.GermanTranslator;
+import control.GermanTranslator;
 import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import view.Client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

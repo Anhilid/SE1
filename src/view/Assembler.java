@@ -1,6 +1,6 @@
-package org.hbrs.s1.ws22.uebung1.view;
-import org.hbrs.s1.ws22.uebung1.control.EnglishTranslator;
-import org.hbrs.s1.ws22.uebung1.control.GermanTranslator;
+package view;
+import control.EnglishTranslator;
+import control.GermanTranslator;
 
 public class Assembler {
 

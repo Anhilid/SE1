@@ -1,4 +1,4 @@
-package org.hbrs.s1.ws22.uebung1.control;
+package control;
 
 import java.net.ConnectException;
 

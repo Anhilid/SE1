@@ -1,4 +1,4 @@
-package org.hbrs.s1.ws22.uebung1.control;
+package control;
 
 public class GermanTranslator implements Translator {
 
@@ -12,7 +12,7 @@ public class GermanTranslator implements Translator {
 		try {
 			return translate(number);
 		} catch (IndexOutOfBoundsException e){
-			throw new IllegalArgumentException("Übersetzung der Zahl" + number + " nicht möglich " + Translator.version);
+			throw new IllegalArgumentException("Übersetzung der Zahl" + number + " nicht möglich " + version);
 		}
 	}
 
