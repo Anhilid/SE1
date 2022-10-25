@@ -1,6 +1,6 @@
 package control;
 
-interface Member {
+public interface Member {
 
         /**
          * ID ist über einen Konstruktor einer abgeleiteten Klasse

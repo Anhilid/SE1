@@ -2,15 +2,14 @@ package control;
 
 public class ConcreteMember implements Member {
     Integer i = 0;
-    Integer id;
+    Integer id = null;
 
-    public ConcreteMember(Member m){
-        Integer id = getNewID();
-        Member member = m;
+    public ConcreteMember(Integer id) {
+        this.id = id;
     }
     @Override
     public Integer getID() {
-        return id;
+        return this.id;
     }
 
     private Integer getNewID(){

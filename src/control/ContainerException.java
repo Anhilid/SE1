@@ -12,7 +12,10 @@ public class ContainerException extends Exception{
      * Exceptions werfen is eleganter als einfach nur einen String zurück geben
      * außerdem ist die Exception "verbindlicher", das ist wirklich ein Fehler und man kann mehr davon auslesen
      */
-    public ContainerException(String s) {
-        super("Das Member-Objekt mit der ID " + " ist bereits vorhanden!");
+    private Integer id;
+
+    public ContainerException(String id){super("Das Member-Objekt mit der ID " + id + " ist bereits vorhanden!");}
+    public ContainerException() {
+        super("NULL-Werte dürfen nicht aufgenommen werden!");
     }
 }
