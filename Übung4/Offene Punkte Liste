@@ -1,0 +1,98 @@
+MITSCHRIFT:
+Eingabe
+    Befehle implementieren
+    Scanner (& Exception Handling)
+Container & Interface anpassen
+Ausgabe
+    Tabellenform
+    Sortierung der Daten --> Musterlösung 2.1
+load
+store
+Tests implementieren
+    manuelle Tests
+    JUnit Test
+
+
+Weitere User Story, die für die Aufgabe 4-2 zu berücksichtigen sind
+US1: Als Entwickler möchte ich Mitarbeiter ausgeben, die einer bestimmten Abteilung
+zugehörig sind.
+• Möglicher Befehl in Console (Auszug Mock-Up):
+> dump abteilung marketing
+Mitarbeiter Nr. 1, Name: Alda, Abteilung Marketing
+Mitarbeiter Nr. 2, Name: Miller, Abteilung Marketing
+// Ein Torben Müller, Mitglied der Abteilung Controlling, würde nicht angezeigt
+
+
+Offene Punkte Liste:
+- Source Code aus der Klasse Container für die interne Abspeicherung
+    + sobald Lösung da ist und meine auch funktioniert
+* Persistence Strategy Sachen übernehmen
+- Container & Interface anpassen
+    + muss ich das überhaupt machen, es wird gar noch nichts angezeigt was falsch ist
+
+- Scanner & Exception Handling
+- enter = Eingabe der MA
+    - Expertisen müssen noch, aber der Rest funktioniert
+    - optinale Abteilung mit Fehlermeldung ausstatten
+- store = persistent !
+- load = persistent !
+- dump (stream basiert) = Ausgabe aller Daten
+    - "Filter Map Reduce" recherchieren
+    * sortierte ausgabe funktioniert
+    - search-dump funktioniert erst mit den expertisen
+- search = Ausgabe Expertisen
+* exit (tested)
+* help (tested)
+
+TODOs die sich aus der Arbeit ergeben haben
+* Expertise in einem Member-Objekt sinnvoll anlegen
+- Methoden in MemberView static oder nicht
+* MemberView: wie mache ich das sinnvoll, dass es nicht immer eine Abteilung gibt?
+            gleiches gilt auch für Expertisen
+- überall die Exceptions abgefangen?
+* Liste nach ID sortiert
+- Client: soll nach mehreren Expertisen gleichzeitig gesucht werden?
+    das mit mit Exception Handling ausgestattet werden
+* EXPERTISEN
+- dump in der richtigen Form zurück geben
+    - Tabelle so richtig?
+- stimmt das mit exit so? - das funktioniert auf jeden fall
+- Dropdown-Feld in Java
+
+
+TESTS:
+- Member mit Abteilung & Expertise hinzufügen
+- Member mit Abteilung hinzufügen
+- Member mit Expertise hinzufügen
+- Member mit nix hinzufügen
+- ungültige Eingabe
+    - ID kann nur Zahl sein
+    - Vorname und Nachname sollten keine Zahl sein (aufpassen, dass evtl mit Bindestrich okay ist)
+    - Expertisen mit ungültigen Eingaben versehen
+- dump
+    - search richtige Werte ausgeben
+
+
+
+FRAGEN:
+- Wie soll dargestellt werden, dass keine Abteilung gebraucht wird? None oder null oder wie? - keine
+- Ist es relevant andere Buchstaben als a-z zuzulassen? Gibt es Mitarbeiter mit Namen, wo andere Zeichen vorkommen? - nur a-z
+- welche ROllen und Abteilungen und Expertisen gibt es und sind möglich? -> Dropdown Feld - festes Set
+
+
+
+
+WISSEN:
+
+https://stackoverflow.com/questions/37773648/what-does-the-client-do-in-command-pattern
+What does the client do in Command Pattern?
+
+The Client is responsible for knowing that it wants a command to be done
+The Client is responsible for knowing how to pick which command gets done,
+    and get an instance of it (even if the client delegates the actual construction
+    of that ConcreteCommand to some other part of the system)
+The Client is responsible for knowing how to pass off a command so that it will
+    eventually be invoked (passing it to some object in the Invoker role, even if
+    that command eventually gets passed off to some other object that actually calls execute())
+The Client is responsible for actually handing off the command to the Invoker
+    (whether it is directly handed off, or passed off to some intermediate part of the system first)

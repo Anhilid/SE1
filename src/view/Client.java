@@ -1,55 +1,43 @@
 package view;
 
-import control.Factory;
-import control.Translator;
+import control.Container;
+import control.ContainerException;
+import control.Member;
+
+import java.util.Scanner;
 
 public class Client {
-	private Translator translator;
-
-	/*
-	 * Referenz kann auch über den Client Konstruktur gegeben werden
-	 * Vorteil: Konstruktor wird nur einmal aufgerufen
-	 * die setter Methode kann mehrmals aufgerufen werden
-	 * daher muss man sich überlegen was man machen möchte
-	 */
-	public Client(Translator translator){
-		this.translator = translator;
-	}
+    Container<Member> container = Container.getInstance();
 
 
-	/*
-	 * Methode zur Ausgabe einer Zahl auf der Console (auch bezeichnet als CLI, Terminal)
-	 */
-	public void display( int aNumber ){
-			// In dieser Methode soll die Methode translateNumber
-			// mit dem übergegebenen Wert der Variable aNumber
-			// aufgerufen werden.
-			//
-			// Strenge Implementierung gegen das Interface Translator gewuenscht!
-			/*
-			 * das heißt die Methoden aus dem Interface Translator genommen werden
-			 * heißt nicht "German Translator" sondern "Translator"
-			 */
+    //public addMember usw.
+    public void addMember(Member r) throws ContainerException {
+        if(r == null){
+            ContainerException ex = new ContainerException();
+            throw ex;
+        }
+        Integer ID = r.getID();
+        //erstmal durch die Liste durch und prüfen ob das Member Objekt schon da ist
+        for (Member rec: container.getCurrentList()) {
+            if(rec.getID().intValue() == ID.intValue()){
+                ContainerException ex = new ContainerException(r.getID().toString());
+                throw ex;
+            }
+        }
+        container.addMember(r);
+    }
 
-			//Das hier in der Factory Methode
-			//return "Übersetzung der Zahl " + number + " nicht möglich " + version
-			translator = Factory.generateTranslator();
-			String result = translator.translateNumber(aNumber);
-			System.out.print("Das Ergebnis der Berechnung: " + result  );
+    public String deleteMember(Integer id) {
+        try{
+            //evtl. muss ich hier erst getMember(id) machen und fragen ob das Null ist
+            Member tmp = container.getMember(id);
+            container.deleteMember(tmp.getID());
+            return "Member-Objekt mit der ID " + id + " ist gelöscht!";
+        } catch (Exception e){
+            throw new IllegalArgumentException("Das Member-Objekt mit der ID " + id + " gibt es nicht!");
+        }
+    }
 
-	}
-
-	/*
-	 * Objekt-Referenz wird von außen gesetzt
-	 * dann brauche ich natürlich keine Factory mehr
-	 */
-	public void setTranslator(Translator translator){
-		this.translator = translator;
-	}
+    //Member-Objekte mit getCurrentList auslesen und an MemberView übergeben
 
 }
-
-
-
-
-

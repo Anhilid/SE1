@@ -1,6 +1,7 @@
 package control;
 
-public class ConcreteMember implements Member {
+//Serializable muss sein, damit man es in einen Stream packen kann
+public class ConcreteMember implements Member, java.io.Serializable {
     Integer i = 0;
     Integer id = null;
 

@@ -1,6 +1,5 @@
 package control;
 
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 import static org.junit.Assert.assertEquals;

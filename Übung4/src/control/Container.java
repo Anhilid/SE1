@@ -1,30 +1,11 @@
 package control;
 import java.util.LinkedList;
 
-/*
- * Vorteil: wenig Code
- * Nachteil: Container wird direkt schon erstellt, selbst wenn man das Objekt noch gar nicht braucht
- * private static final Container<Member> con = new Container<>();
- * private Container(){
-    }
-  * //wir brauchen noch eine Methode um auf den Container zugreifen zu können
-    //die muss statisch, weil die sonst nur aufgerufen werden könnte, wenn ein Objekt existiert
-    * public static COntainer getInstance(){return con;}
- */
 public class Container< E extends Member> {
-    //Singleton: von einer Klasse darf nur eine Instanz geben
     private static Container<Member> con;
-
-    //Container Konstruktor private, damit nur in dieser Klasse aufrufen können
     private Container(){
     }
 
-    /*
-     * Vorteil: man hat den Container nur, wenn man ihn auch wirklich braucht
-     * Nachteil: evtl. gehen die Daten dann verloren
-     */
-    //synchronized heißt: in diesen Block kommt nur ein Objekt zur Laufzeit rein aller anderen kommen da nicht rein
-    //Nachteil von synchronized: lange Laufzeiten
     public synchronized static Container<Member> getInstance(){
         if(con == null){
             con = new Container<>();
@@ -36,8 +17,11 @@ public class Container< E extends Member> {
      * Interne LinkedList zur Abspeicherung der Objekte
      */
     private LinkedList<Member> MemberObjects = new LinkedList<>(); //Key, value
-    private control.PersistenceStrategy PersistenceStrategy;
-    private PersistenceStrategy<Member> sta = null;
+
+    //Persistence Strategy
+    private control.PersistenceStrategy stra;
+    //sta = PersistenceStrategyStream();
+
     /*
      * Methode zum Hinzufuegen einer Member.
      * @throws ContainerException
@@ -49,16 +33,21 @@ public class Container< E extends Member> {
         }
         Integer ID = r.getID();
         //erstmal durch die Liste durch und prüfen ob das Member Objekt schon da ist
-        for (Member rec:MemberObjects) {
-            if(rec.getID().intValue() == ID.intValue()){
-                ContainerException ex = new ContainerException(r.getID().toString());
-                throw ex;
-            }
+        if(contains(ID)){
+            throw new ContainerException(ID);
         }
         MemberObjects.add(r);
     }
 
-
+    public boolean contains(int id) throws ContainerException {
+        for (Member rec:MemberObjects) {
+            if(rec.getID().intValue() == id){
+                ContainerException ex = new ContainerException(id);
+                throw ex;
+            }
+        }
+        return false;
+    }
 
     public String deleteMember(Integer id) {
         try{
@@ -93,30 +82,31 @@ public class Container< E extends Member> {
         return null;
     }
 
-    public void setSta(PersistenceStrategy<Member> stra){this.sta = stra;}
-
     /*
      * die aktuell in einem Container-Objekt hinzugefügten Member-Objekte persistent auf Datenspeicher speichern
      */
     public void store() throws PersistenceException {
-        if(sta == null)
-            throw new PersistenceException(PersistenceException.ExceptionType.NoStrategyIsSet, "No strategy");
-        sta.save(MemberObjects);
+        stra.save(MemberObjects);
     }
 
     /*
      * laden von Member-Objekten auch nach Neustart mit der Methode möglich sein
      * befinden sich zu dem Zeitpunkt des Ladens Member-objekte in der Liste, sollen diese einfach überschrieben werden
      */
-    public void load() throws PersistenceException{
-        if(sta == null){
-            throw new PersistenceException(PersistenceException.ExceptionType.NoStrategyIsSet, "No Strategy");
-        }
+    public void loadforce() throws PersistenceException{
         try {
-            sta.load();
+            stra.load();
         } catch (Exception UnsupportedOperationException){
             throw new PersistenceException(PersistenceException.ExceptionType.ImplementationNotAvailable, "No Implementation not available!");
         }
     }
 
+    public void loadmerge() throws PersistenceException {
+        try {
+            //TODO das muss was anderes sein
+            stra.load();
+        } catch (Exception UnsupportedOperationException){
+            throw new PersistenceException(PersistenceException.ExceptionType.ImplementationNotAvailable, "No Implementation not available!");
+        }
+    }
 }

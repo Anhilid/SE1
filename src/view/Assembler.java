@@ -6,7 +6,7 @@ public class Assembler {
 
     public Assembler() {
         GermanTranslator germanTranslator = new GermanTranslator();
-        Client client = new Client( germanTranslator );
+        ClientTranslator client = new ClientTranslator( germanTranslator );
 
         client.display(1);
 

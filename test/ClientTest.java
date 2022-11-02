@@ -2,7 +2,7 @@ import control.GermanTranslator;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.Client;
+import view.ClientTranslator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,7 +14,7 @@ class ClientTest {
     private GermanTranslator g1 = new GermanTranslator();
 
     //ein Client-Objekt erstellen
-    private Client c1 = new Client(g1);
+    private ClientTranslator c1 = new ClientTranslator(g1);
 
     /*
      * Kanal des Outputs merken und dann verändern
