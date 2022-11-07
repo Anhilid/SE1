@@ -1,4 +1,4 @@
-package control;
+package Model;
 
 public class ContainerException extends Exception{
 

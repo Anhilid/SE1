@@ -1,10 +1,9 @@
 package view;
 
-import control.Member;
+import Model.Member;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 //Ausgaben nur noch hier drüber
@@ -19,6 +18,7 @@ public class MemberView {
         System.out.println("search  Suche nach Expertisen");
         System.out.println("exit    Verlassen der Anwendung");
     }
+
 
     public static class ComparatorAlphabetic implements Comparator<Member> {
 
@@ -35,17 +35,56 @@ public class MemberView {
         //Tabellen-Form
         System.out.println("ID     Name");
         ComparatorAlphabetic alphabetic = new ComparatorAlphabetic();
+        //über comparable machen
         liste.sort(alphabetic);
+
+        System.out.printf("--------------------------------%n");
+        System.out.printf("      Members alphabetisch      %n");
+        System.out.printf("--------------------------------%n");
+
+
+        //oder über Collections machen
+        //Collections.sort(liste, alphabetic);
         for (Member rec:liste) {
             System.out.println(rec.toString());
         }
     }
 
+    public static <liste> void dumpAbteilung(List<Member> liste, String abteilung) {
+        try {
+            Stream<Member> newStream = liste.stream()
+                    .filter(empoly -> empoly.getAbteilung().equals(abteilung));
+            List<Member> newList = newStream.toList();
+            for (Member rec : newList) {
+                System.out.println(rec.toString());
+            }
+            System.out.println("Liste erfolgreich ausgegeben");
+        } catch (Exception e){
+            throw new RuntimeException("Da hat etwas mit dem Filter nicht funktioniert.");
+        }
+    }
+
+    public static <liste> void dumpExpertisen(List<Member> liste, String expertisen){
+        try {
+            Stream<Member> newStream = liste.stream()
+                    .filter(empoly -> empoly.getExpertise().equals(expertisen));
+            List<Member> newList = newStream.toList();
+            for (Member rec : newList) {
+                System.out.println(rec.toString());
+            }
+            System.out.println("Liste erfolgreich ausgegeben");
+        } catch (Exception e){
+            throw new RuntimeException("Da hat etwas mit dem Filter nicht funktioniert.");
+        }
+    }
+
+/*
     public static <liste> void dumptest(List<Member> liste){
         for (Member rec:liste) {
             System.out.println(rec.make());
         }
     }
+*/
 
     /*
      * das ist relativ hart, weil wie genau soll gesucht werden
@@ -57,6 +96,7 @@ public class MemberView {
     public static <liste> void dump(List<Member> liste, String exp){
         List<Member> expertisenMA = liste
                 .stream()
+                .map(liste -> list.getName());
                 .filter(liste -> list.g);
         Stream<Member> memberStream = liste.stream().filter(checkExpertise(exp));
         List list = memberStream.toList();
@@ -65,6 +105,13 @@ public class MemberView {
         }
     }
 
+    for(Employee employee: list){
+        System.out.println(employee.toString());
+    }
+
+    List<Employee> new List = this.liste.stream()
+        .filter(employee -> employee.getAbteilung.equals("Abteilung"))
+        .collect(Collection.toList());
 
     //evtl. muss das mit Class gemacht werden
     //class

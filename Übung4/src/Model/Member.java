@@ -1,6 +1,10 @@
-package control;
+package Model;
+//Serializable muss sein, damit man es in einen Stream packen kann - also damit über Netzwerk schicken oder persitent speichern
 
-public interface Member {
+import java.io.Serializable;
+import java.util.LinkedList;
+
+public interface Member extends Serializable {
 
         /**
          * ID ist über einen Konstruktor einer abgeleiteten Klasse
@@ -13,10 +17,12 @@ public interface Member {
         String getNachname();
         String getRolle();
         String getAbteilung();
-        //String getExpertise();
+        LinkedList getExpertise();
 
         public String toString();
 
         public String make();
+        //public String toStringExpertisen();
+        //public String toStringAbteilungen();
 
 }

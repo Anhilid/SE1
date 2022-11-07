@@ -1,9 +1,10 @@
-package control;
+package Model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-//Serializable muss sein, damit man es in einen Stream packen kann
-public class ConcreteMember implements Member, java.io.Serializable {
+//Serializable muss sein, damit man es in einen Stream packen kann - also damit über Netzwerk schicken oder persitent speichern
+public class ConcreteMember implements Member, Serializable {
     /*
      * Eigenschaften von Membern sind eindeutige ID, Vorname, Nachname,
      * Rolle im Unternehmen, Abteilung (falls vorhanden), Expertisen
@@ -65,7 +66,10 @@ public class ConcreteMember implements Member, java.io.Serializable {
     public String toString(){
         return getID() +"       " + getNachname();
     }
-
+/*
+    public String toStringExpertisen(){return getExpertise().toString();}
+    public String toStringAbteilungen(){return getAbteilung();}
+*/
     public String make(){
         return getID() + ", " + getVorname() + ", " + getNachname() + ", " + getRolle() + ", "  + getAbteilung() + ", " + getExpertise();
     }

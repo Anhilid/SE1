@@ -13,6 +13,26 @@ Tests implementieren
     JUnit Test
 
 
+MITSCHRIFT 4:
+
+welche Klassen:
+ M   Container
+ M   Employee
+ C   EingabeDialog (Shell) -> vor allem für Scanner
+ M   ContainerException
+ M   PersistenceStrategy
+ M   PersistenceStrategyStream
+ M   PersistenceException
+ V   Ausgabe (MemberView) -> dump Methode
+ C   Main
+
+    siehe Bild auf Handy
+
+    => daraus ergeben sich die Packages nach dem Pattern: Model View Control (MVC)
+    pro Kategorie ein package
+    man kann auch sub-packages habe -> zum Beispiel für Exceptions
+
+
 Weitere User Story, die für die Aufgabe 4-2 zu berücksichtigen sind
 US1: Als Entwickler möchte ich Mitarbeiter ausgeben, die einer bestimmten Abteilung
 zugehörig sind.
@@ -24,23 +44,24 @@ Mitarbeiter Nr. 2, Name: Miller, Abteilung Marketing
 
 
 Offene Punkte Liste:
-- Source Code aus der Klasse Container für die interne Abspeicherung
+* Source Code aus der Klasse Container für die interne Abspeicherung
     + sobald Lösung da ist und meine auch funktioniert
 * Persistence Strategy Sachen übernehmen
 - Container & Interface anpassen
     + muss ich das überhaupt machen, es wird gar noch nichts angezeigt was falsch ist
 
 - Scanner & Exception Handling
-- enter = Eingabe der MA
-    - Expertisen müssen noch, aber der Rest funktioniert
-    - optinale Abteilung mit Fehlermeldung ausstatten
-- store = persistent !
-- load = persistent !
+* enter = Eingabe der MA
+    * Expertisen müssen noch, aber der Rest funktioniert
+    * optinale Abteilung mit Fehlermeldung ausstatten
+* store = persistent ! (soweit durch - glaube ich)
+* load = persistent !
 - dump (stream basiert) = Ausgabe aller Daten
     - "Filter Map Reduce" recherchieren
     * sortierte ausgabe funktioniert
     - search-dump funktioniert erst mit den expertisen
 - search = Ausgabe Expertisen
+- search = Ausgaben Abteilungen
 * exit (tested)
 * help (tested)
 
@@ -67,10 +88,15 @@ TESTS:
 - Member mit nix hinzufügen
 - ungültige Eingabe
     - ID kann nur Zahl sein
-    - Vorname und Nachname sollten keine Zahl sein (aufpassen, dass evtl mit Bindestrich okay ist)
+    - Vorname und Nachname sollten keine Zahl sein (aufpassen, dass evtl mit Bindestrich okay ist-Bindestrich braucht nicht)
     - Expertisen mit ungültigen Eingaben versehen
 - dump
     - search richtige Werte ausgeben
+- load force
+- load merge
+- store (von vorheriger Aufgabe übernehmen)
+- nach Abteilungen suchen
+- nach Expertisen suchen
 
 
 

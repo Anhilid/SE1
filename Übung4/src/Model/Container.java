@@ -1,26 +1,33 @@
-package control;
-import java.util.LinkedList;
+package Model;
 
-public class Container< E extends Member> {
-    private static Container<Member> con;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Container implements Serializable {
+    private static Container con = null;
+    /*
+     * Interne LinkedList zur Abspeicherung der Objekte
+     */
+    private List<Member> MemberObjects = null; //Key, value
+
+
+    //Persistence Strategy
+    private Model.PersistenceStrategy PersistenceStrategy;
+    private Model.PersistenceStrategy stra;
+
     private Container(){
+        MemberObjects = new LinkedList<Member>();
     }
 
-    public synchronized static Container<Member> getInstance(){
+    public static synchronized Container getInstance(){
         if(con == null){
-            con = new Container<>();
+            con = new Container();
         }
         return con;
     }
 
-    /*
-     * Interne LinkedList zur Abspeicherung der Objekte
-     */
-    private LinkedList<Member> MemberObjects = new LinkedList<>(); //Key, value
-
-    //Persistence Strategy
-    private control.PersistenceStrategy stra;
-    //sta = PersistenceStrategyStream();
 
     /*
      * Methode zum Hinzufuegen einer Member.
@@ -60,7 +67,7 @@ public class Container< E extends Member> {
         }
     }
 
-    public LinkedList<Member> getCurrentList(){
+    public List getCurrentList(){
         return MemberObjects;
     }
 
@@ -82,29 +89,45 @@ public class Container< E extends Member> {
         return null;
     }
 
+
+    public void setSta(Model.PersistenceStrategy<Member> stra){this.stra = stra;}
     /*
      * die aktuell in einem Container-Objekt hinzugefügten Member-Objekte persistent auf Datenspeicher speichern
      */
     public void store() throws PersistenceException {
-        stra.save(MemberObjects);
+        if (this.stra == null)
+            throw new PersistenceException( PersistenceException.ExceptionType.NoStrategyIsSet,
+                    "Strategy not initialized");
+        try {
+            System.out.println("Storing MemberObjects List....");
+            this.stra.save(MemberObjects);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     /*
      * laden von Member-Objekten auch nach Neustart mit der Methode möglich sein
      * befinden sich zu dem Zeitpunkt des Ladens Member-objekte in der Liste, sollen diese einfach überschrieben werden
      */
-    public void loadforce() throws PersistenceException{
+    public void loadForce() throws PersistenceException{
         try {
-            stra.load();
+            List<Member> liste = stra.load();
+            MemberObjects = liste;
         } catch (Exception UnsupportedOperationException){
             throw new PersistenceException(PersistenceException.ExceptionType.ImplementationNotAvailable, "No Implementation not available!");
         }
     }
 
-    public void loadmerge() throws PersistenceException {
+    public List loadMerge() throws PersistenceException {
         try {
             //TODO das muss was anderes sein
-            stra.load();
+            List<Member> listeLoad = stra.load();
+            for (Member rec :listeLoad) {
+                addMember(rec);
+            }
+            return getCurrentList();
         } catch (Exception UnsupportedOperationException){
             throw new PersistenceException(PersistenceException.ExceptionType.ImplementationNotAvailable, "No Implementation not available!");
         }
